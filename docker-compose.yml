@@ -1,0 +1,51 @@
+services:
+  omni:
+    image: ghcr.io/siderolabs/omni:v0.37.5
+    restart: unless-stopped
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    ports:
+      - 443:443
+      - 8090:8090
+      - 8100:8100
+      - 50180:50180/udp
+      - 50180:50180/tcp
+      - 8091:8091
+      - 2122:2122
+    volumes:
+      - ./data/etcd:/_out/etcd:rw
+      - ./gpg/omni.asc:/omni.asc:ro
+      - /etc/letsencrypt/live/omni.lab.djls.space/fullchain.pem:/tls.crt:ro
+      - /etc/letsencrypt/live/omni.lab.djls.space/privkey.pem:/tls.key:ro
+    command:
+      - --account-id=37913815-f635-4327-9137-d61095852854
+      - --name=onprem-omni
+      - --advertised-kubernetes-proxy-url=https://omni.lab.djls.space:8100
+      - --k8s-proxy-bind-addr=0.0.0.0:8100
+      - --advertised-api-url=https://omni.lab.djls.space
+      - --bind-addr=0.0.0.0:443
+      - --cert=/tls.crt
+      - --key=/tls.key
+      - --private-key-source=file:///omni.asc
+      - --event-sink-port=8091
+
+      - --siderolink-api-advertised-url=https://omni.lab.djls.space:8090
+      - --machine-api-bind-addr=0.0.0.0:8090
+      - --machine-api-cert=/tls.crt
+      - --machine-api-key=/tls.key
+
+      - --siderolink-wireguard-advertised-addr=10.250.11.10:50180
+      - --siderolink-wireguard-bind-addr=0.0.0.0:50180
+
+      - --auth-auth0-enabled=true
+      - --auth-auth0-domain=dev-lcc3e5zkuvug2jzy.us.auth0.com
+      - --auth-auth0-client-id=D1D1aXKB0j5aVMVtTaacqjNMjMEgnxSU
+      - --initial-users=lucas@djls.io
+
+      - --etcd-embedded=true
+      - --etcd-endpoints=http://0.0.0.0:2379
+      - --etcd-backup-max-interval=24h0m0s
+      - --etcd-backup-min-interval=1h0m0s
+      - --etcd-backup-tick-interval=1m0s
