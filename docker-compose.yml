@@ -1,4 +1,33 @@
 services:
+  prep:
+    restart: no
+    image: ghcr.io/justereseau/omni_etcd_backup:9e7f2d8a1fe538d5564231bd33c7a7014a0c3945
+    environment:
+      ETCD_DIR: /etcd
+      GPG_PRIVATE_KEY: /gpg/private.pem
+    env_file:
+      - path: ./configs/restore.env
+        required: true
+      - path: ./configs/restore.override.env
+        required: false
+    entrypoint: /scripts/restore.sh
+    volumes:
+      - ./data/etcd:/etcd
+      - ./gpg/bk.key:/gpg/private.pem:ro
+
+  bk:
+    # To add to cron: docker compose --project-directory /home/lmaurice/omni up bk --build
+    restart: no
+    image: ghcr.io/justereseau/omni_etcd_backup:9e7f2d8a1fe538d5564231bd33c7a7014a0c3945
+    env_file:
+      - path: ./configs/backup.env
+        required: true
+      - path: ./configs/backup.override.env
+        required: false
+    volumes:
+      - ./data/etcd-backup:/backups
+      - ./gpg/bk.pub:/gpg/public.pem:ro
+
   omni:
     image: ghcr.io/siderolabs/omni:v0.37.5
     restart: unless-stopped
