@@ -2,3 +2,4 @@
 /configs/*.override.env
 # Ignore the data folder
 /data/*
+/gpg/*
