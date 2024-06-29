@@ -1,35 +1,22 @@
 services:
-  prep:
-    restart: no
-    image: ghcr.io/justereseau/omni_etcd_backup:9e7f2d8a1fe538d5564231bd33c7a7014a0c3945
-    environment:
-      ETCD_DIR: /etcd
-      GPG_PRIVATE_KEY: /gpg/private.pem
-    env_file:
-      - path: ./configs/restore.env
-        required: true
-      - path: ./configs/restore.override.env
-        required: false
-    entrypoint: /scripts/restore.sh
-    volumes:
-      - ./data/etcd:/etcd
-      - ./gpg/bk.key:/gpg/private.pem:ro
+  # httpd:
+  #   image: lipanski/docker-static-website:latest
+  #   restart: unless-stopped
+  #   command: [ "/busybox-httpd", "-f", "-v", "-p", "8080" ]
+  #   ports:
+  #     - 8080:8080
+  #   volumes:
+  #     - ./data/pxe-assets:/home/static:ro
 
-  bk:
-    # To add to cron: docker compose --project-directory /home/lmaurice/omni up bk --build
-    restart: no
-    image: ghcr.io/justereseau/omni_etcd_backup:9e7f2d8a1fe538d5564231bd33c7a7014a0c3945
-    environment:
-      GPG_PUBLIC_KEY: /gpg/public.pem
-      ETCD_ENDPOINT: http://omni:2379
-    env_file:
-      - path: ./configs/backup.env
-        required: true
-      - path: ./configs/backup.override.env
-        required: false
-    volumes:
-      - ./data/etcd-backup:/backups
-      - ./gpg/bk.pub:/gpg/public.pem:ro
+  # tftpd:
+  #   build: tftpd
+  #   restart: unless-stopped
+  #   command:
+  #     - --tftp.root-dir=/data
+  #   ports:
+  #     - 69:69/udp
+  #   volumes:
+  #     - ./data/pxe-assets:/data:ro
 
   omni:
     image: ghcr.io/siderolabs/omni:v0.38.2
@@ -39,13 +26,12 @@ services:
     devices:
       - /dev/net/tun:/dev/net/tun
     ports:
-      - 443:443
-      - 8090:8090
-      - 8100:8100
-      - 50180:50180/udp
-      - 50180:50180/tcp
-      - 8091:8091
-      - 2122:2122
+      - 443:443 # Sidero UI
+      - 8090:8090 # API Endpoint ?
+      - 8100:8100 # Kubernetes Proxy
+      - 50180:50180/udp # Wireguard
+      - 50180:50180/tcp # Wireguard
+      - 2122:2122 # Prometheus Metrics
     volumes:
       - ./data/etcd:/_out/etcd:rw
       - ./gpg/omni.asc:/omni.asc:ro
