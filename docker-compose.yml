@@ -32,7 +32,7 @@ services:
       - ./gpg/bk.pub:/gpg/public.pem:ro
 
   omni:
-    image: ghcr.io/siderolabs/omni:v0.37.5
+    image: ghcr.io/siderolabs/omni:v0.38.2
     restart: unless-stopped
     cap_add:
       - NET_ADMIN
