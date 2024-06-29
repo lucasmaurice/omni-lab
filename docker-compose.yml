@@ -19,6 +19,9 @@ services:
     # To add to cron: docker compose --project-directory /home/lmaurice/omni up bk --build
     restart: no
     image: ghcr.io/justereseau/omni_etcd_backup:9e7f2d8a1fe538d5564231bd33c7a7014a0c3945
+    environment:
+      GPG_PUBLIC_KEY: /gpg/public.pem
+      ETCD_ENDPOINT: http://omni:2379
     env_file:
       - path: ./configs/backup.env
         required: true
