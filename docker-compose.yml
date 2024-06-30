@@ -67,3 +67,6 @@ services:
       - --etcd-backup-max-interval=24h0m0s
       - --etcd-backup-min-interval=1h0m0s
       - --etcd-backup-tick-interval=1m0s
+
+      - --workload-proxying-enabled=true
+      - --workload-proxying-subdomain=op
