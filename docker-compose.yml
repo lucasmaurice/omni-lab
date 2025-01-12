@@ -58,8 +58,8 @@ services:
       - --siderolink-wireguard-bind-addr=0.0.0.0:50180
 
       - --auth-auth0-enabled=true
-      - --auth-auth0-domain=dev-lcc3e5zkuvug2jzy.us.auth0.com
-      - --auth-auth0-client-id=D1D1aXKB0j5aVMVtTaacqjNMjMEgnxSU
+      - --auth-auth0-domain=justereseau.ca.auth0.com
+      - --auth-auth0-client-id=gdfQSEGmwTyNaovAtlqPF0TVSF93BSjZ
       - --initial-users=lucas@djls.io
 
       - --etcd-embedded=true
