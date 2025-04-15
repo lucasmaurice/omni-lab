@@ -35,6 +35,7 @@ services:
     volumes:
       - ./data/etcd:/_out/etcd:rw
       - ./data/logs:/_out/logs:rw
+      - ./data/secondary-storage:/_out/secondary-storage:rw
       - ./gpg/omni.asc:/omni.asc:ro
       - /etc/letsencrypt/live/omni.lab.djls.space/fullchain.pem:/tls.crt:ro
       - /etc/letsencrypt/live/omni.lab.djls.space/privkey.pem:/tls.key:ro
