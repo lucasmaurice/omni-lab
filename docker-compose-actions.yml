@@ -7,7 +7,7 @@ services:
       GPG_PRIVATE_KEY: /gpg/private.pem
     env_file:
       - path: ./configs/restore.env
-        required: true
+        required: false
       - path: ./configs/restore.override.env
         required: false
     entrypoint: /scripts/restore.sh
@@ -24,7 +24,7 @@ services:
       ETCD_ENDPOINT: http://omni:2379
     env_file:
       - path: ./configs/backup.env
-        required: true
+        required: false
       - path: ./configs/backup.override.env
         required: false
     volumes:
