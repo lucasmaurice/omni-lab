@@ -1,7 +1,7 @@
 services:
   prep:
     restart: no
-    image: ghcr.io/justereseau/omni_etcd_backup:9e7f2d8a1fe538d5564231bd33c7a7014a0c3945
+    image: ghcr.io/justereseau/omni_etcd_backup:890c6537af48fece7f78010632ef2cbfa81e248e
     environment:
       ETCD_DIR: /etcd
       GPG_PRIVATE_KEY: /gpg/private.pem
@@ -18,7 +18,7 @@ services:
   bk:
     # To add to cron: docker compose --project-directory /home/lmaurice/omni -f docker-compose.yml -f docker-compose-actions.yml up bk --build
     restart: no
-    image: ghcr.io/justereseau/omni_etcd_backup:9e7f2d8a1fe538d5564231bd33c7a7014a0c3945
+    image: ghcr.io/justereseau/omni_etcd_backup:890c6537af48fece7f78010632ef2cbfa81e248e
     environment:
       GPG_PUBLIC_KEY: /gpg/public.pem
       ETCD_ENDPOINT: http://omni:2379
