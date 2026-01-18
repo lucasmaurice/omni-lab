@@ -19,7 +19,7 @@ services:
   #     - ./data/pxe-assets:/data:ro
 
   omni:
-    image: ghcr.io/siderolabs/omni:v1.4.6
+    image: ghcr.io/siderolabs/omni:v1.4.7
     restart: unless-stopped
     cap_add:
       - NET_ADMIN
