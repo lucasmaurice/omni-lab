@@ -1,10 +1,10 @@
 module github.com/justereseau/go-ftpd/satisfactory-exporter
 
-go 1.22.2
+go 1.23.0
 
-require github.com/pin/tftp/v3 v3.1.0
+require github.com/pin/tftp/v3 v3.2.0
 
 require (
-	golang.org/x/net v0.0.0-20200202094626-16171245cfb2 // indirect
-	golang.org/x/sys v0.0.0-20190215142949-d0b11bdaac8a // indirect
+	golang.org/x/net v0.43.0 // indirect
+	golang.org/x/sys v0.35.0 // indirect
 )
